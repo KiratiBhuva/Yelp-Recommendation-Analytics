@@ -1,0 +1,12 @@
+.card-tags {
+  margin-right:5px ;
+  margin-bottom: 5px;
+}
+
+.card-tags-container {
+  margin-left: 15px;
+}
+
+.checked {
+  color: orange
+}

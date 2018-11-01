@@ -1,0 +1,39 @@
+
+<div class="card">
+    <div class="card-header" [attr.id]="'heading' + cardId + '-' + parentId.substr(1)">
+      <h5 class="mb-0">
+        <button class="btn btn-link" type="button" data-toggle="collapse" [attr.data-target]="'#rest'+ cardId + '-' + parentId.substr(1)" aria-expanded="true" [attr.aria-controls]="'rest'+ cardId" >
+          <span style="color:black;">#{{restaurant.rank}}</span> {{restaurant.name}}
+        </button>
+      </h5>
+    </div>
+
+    <div [attr.id]="'rest'+ cardId + '-' + parentId.substr(1)" class="collapse" [attr.aria-labelledby]="'heading' + cardId + '-' + parentId.substr(1)" [attr.data-parent]="parentId">
+      <div class="card-body">
+        <h5 class="card-subtitle mb-2 text-muted">Known For:</h5>
+
+        <div class="row">
+            <div class = "card-tags-container">
+              <span *ngFor="let c of categories">
+                <span *ngIf="c!= 'Restaurants' && c != 'Event Planning & Services' && c != 'Food'" class="btn btn-sm btn-warning card-tags">
+                  {{c}}
+                </span>
+              </span>
+            </div>
+        </div>
+
+        <br>
+
+        <h5 class="card-subtitle mb-2 text-muted">City:</h5>
+
+        <p class="card-text">
+          {{restaurant.city}}
+        </p>
+
+       <h5 class="card-subtitle mb-2 text-muted">Yelp Rating</h5>
+        <span *ngFor="let i of [1,2,3,4,5];" class="fa fa-star" [ngClass]="{'checked': i < checked_stars,'fa-star-half-o': checked_stars - i == 0.5}"></span>
+
+      </div>
+    </div>
+  </div>
+

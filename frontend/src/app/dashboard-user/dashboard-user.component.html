@@ -1,0 +1,51 @@
+<div class="container app-container">
+  <div class="list-container row">
+    <div class="col">
+      <input class="form-control" type="text" placeholder="Zip Code" [ngModel]="zipCode">
+    </div>
+    <div class="col">
+      <div class="input-group mb-3">
+
+        <select class="custom-select" id="quarter-dropdown" [(ngModel)]="selectedQuarter">
+          <option value="{{q.value}}" *ngFor="let q of quarters" [selected]="q.value == '2'">{{q.name}}</option>
+        </select>
+        <div class="input-group-append">
+          <label class="input-group-text" for="quarter-dropdown">Quarter</label>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <label class="input-group-text" for="year-dropdown">Year</label>
+        </div>
+        <select class="custom-select" id="year-dropdown" [(ngModel)]="selectedYear">
+          <option *ngFor="let y of years" [selected]="selectedYear == y">{{y}}</option>
+        </select>
+      </div>
+    </div>
+    <div class="w-10">
+      <button type="button" class="btn btn-primary" (click)="search()">Go</button>
+    </div>
+
+
+
+  </div>
+
+
+  <div class="row">
+    <div class="col">
+      <h3>Top 10 Restaurants of Canada for </h3>
+      <div class="accordion" id="toprestaurant">
+        <app-restaurant-card *ngFor="let r of restaurants; let i = index" [cardId]= "i" [restaurant]="r" [parentId]="'#toprestaurant'"></app-restaurant-card>
+      </div>
+
+    </div>
+    <div class="col">
+      <h3>Top Recommendations for you</h3>
+      <div class="accordion" id="toprecommendations">
+        <app-restaurant-card *ngFor="let recom of recommendations; let i = index" [cardId]= "i" [restaurant]="recom" [parentId]="'#toprecommendations'"></app-restaurant-card>
+      </div>
+    </div>
+  </div>
+</div>

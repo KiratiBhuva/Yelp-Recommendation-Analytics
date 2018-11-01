@@ -1,0 +1,4 @@
+<h3>Top 10 Restaurants of Canada for </h3>
+<div class="accordion" id="toprestaurant">
+  <app-restaurant-card *ngFor="let r of restaurants; let i = index" [cardId]= "i" [restaurant]="r" [parentId]="'#toprestaurant'"></app-restaurant-card>
+</div>
