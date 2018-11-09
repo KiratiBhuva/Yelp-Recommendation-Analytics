@@ -14,7 +14,8 @@ from surprise import KNNBasic
 from surprise.model_selection import cross_validate, train_test_split
 from time import time
 from collections import defaultdict
-
+import pickle
+from BusinessInsights import TopRecommendation 
 
 
 class Recommendation_System:
@@ -63,3 +64,18 @@ class Recommendation_System:
         return ''
 
 
+if __name__ == '__main__':
+    
+    rs = Recommendation_System()
+    data = rs.prepare_data()
+    print(len(data.df))
+    algo = rs.build_model(data)
+    test_set = rs.get_anti_testset(data)
+    start = time()
+    predictions = rs.store_predictions(test_set,algo)
+    end = time()
+    print((end - start )/60)
+    recommendations = rs.get_recommendations(predictions, 5)
+    pickle.dump(recommendations, open("model.pkl","wb"))
+    print("Model Dumped Successfully")
+    
