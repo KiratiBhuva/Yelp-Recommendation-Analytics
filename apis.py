@@ -12,7 +12,8 @@ CORS(app)
 print('Loading model 1........ '+'\n')
 model = pickle.load(open("model.pkl","rb"))
 print('Loading model 2.....')
-
+modelafterrec = pickle.load(open("modelafterrec.pkl","rb"))
+print('Model 2 loaded...')
 returnedList = pickle.load(open("modelTopRec.pkl","rb"))
 reviewData = returnedList[0]
 restaurantData = returnedList[1]
@@ -130,6 +131,36 @@ def get_recommendation_for_uid(client_id):
                     }),200
     return 'Not found'
 
+
+@app.route('/get_recommendation_after_topic_modelling/<string:user_id>', methods=['GET'])
+def get_recommendation(user_id):
+    for uid, user_ratings in modelafterrec.items():
+        if (uid == user_id):
+            valueToSend =  uid, ([iid for (iid, _) in user_ratings])
+            userId = valueToSend[0]
+            business_ids = valueToSend[1]
+            df_restaurant = restaurantData.loc[restaurantData['business_id'].isin(business_ids)]
+
+    
+            restaurant_details = dict()
+            restaurant_details['user_id'] = userId
+            for index, row in df_restaurant.iterrows():
+                
+                restaurant_details[row['business_id']] = {
+                    'name':row['name'],
+                    'postal_code':row['postal_code'],
+                    'categories' :row['categories'],
+                    'is_open' : row['is_open'],
+                    'city':row['city'],
+                    'state':row['state'],
+                    'stars':row['stars'],
+                    'lat':row['latitude'],
+                    'longi':row['longitude']  
+                     } 
+
+            return  jsonify({"response": restaurant_details
+                    }),200
+    return 'Not found'    
 
 @app.route('/get_top_restaurants_quarter_qy/<string:quarter>/<int:year>', methods=['GET'])
 def getReviews(quarter,year): 
